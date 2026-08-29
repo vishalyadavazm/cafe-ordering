@@ -1,0 +1,9 @@
+{
+  "name": "Brew Cafe Ordering",
+  "short_name": "Brew Cafe",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF5EC",
+  "theme_color": "#1E5C48",
+  "icons": []
+}
