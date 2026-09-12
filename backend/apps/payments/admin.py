@@ -1,0 +1,10 @@
+from django.contrib import admin
+
+from apps.payments.models import Payment
+
+
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ("order", "provider", "amount", "status", "method", "cafe")
+    list_filter = ("cafe", "status", "provider")
+    search_fields = ("razorpay_order_id", "razorpay_payment_id")
