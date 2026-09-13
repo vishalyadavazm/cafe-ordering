@@ -5,6 +5,7 @@ interface AuthState {
   token: string | null;
   staff: Staff | null;
   setAuth: (token: string, staff: Staff, refreshToken?: string) => void;
+  setStaff: (staff: Staff) => void;
   logout: () => void;
 }
 
@@ -16,6 +17,7 @@ export const useAuth = create<AuthState>((set) => ({
     if (refreshToken) localStorage.setItem("refresh_token", refreshToken);
     set({ token, staff });
   },
+  setStaff: (staff) => set({ staff }),
   logout: () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");

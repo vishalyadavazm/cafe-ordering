@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { Coffee } from "lucide-react";
 import { login } from "@/features/auth/api";
 import { useAuth } from "@/store/auth";
 
@@ -29,18 +30,17 @@ export function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-stone-50 px-4">
-      <div className="w-full max-w-sm rounded-xl border border-stone-200 bg-white p-8 shadow-sm">
-        <div className="mb-6 text-center">
-          <h1 className="text-xl font-semibold text-stone-900">Brew Cafe</h1>
-          <p className="mt-1 text-sm text-stone-500">Sign in to the staff dashboard</p>
+    <div className="login-wrap">
+      <div className="login-card">
+        <div className="login-logo"><Coffee size={24} /></div>
+        <div style={{ textAlign: "center" }}>
+          <h1 style={{ fontSize: 20 }}>Brew Cafe</h1>
+          <p className="eyebrow" style={{ marginTop: 6 }}>Staff console</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-stone-700">
-              Email
-            </label>
+        <form onSubmit={handleSubmit} noValidate>
+          <div className="field">
+            <label htmlFor="email">Email</label>
             <input
               id="email"
               name="email"
@@ -50,14 +50,11 @@ export function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@cafe.com"
-              className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm text-stone-900 shadow-sm focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500"
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-stone-700">
-              Password
-            </label>
+          <div className="field">
+            <label htmlFor="password">Password</label>
             <input
               id="password"
               name="password"
@@ -67,21 +64,12 @@ export function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm text-stone-900 shadow-sm focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500"
             />
           </div>
 
-          {mutation.isError && (
-            <p role="alert" className="text-sm text-red-600">
-              Invalid email or password.
-            </p>
-          )}
+          {mutation.isError && <p role="alert" className="form-error">Invalid email or password.</p>}
 
-          <button
-            type="submit"
-            disabled={mutation.isPending}
-            className="w-full rounded-md bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-60"
-          >
+          <button type="submit" disabled={mutation.isPending} className="btn btn-primary btn-block" style={{ marginTop: 20 }}>
             {mutation.isPending ? "Signing in…" : "Sign in"}
           </button>
         </form>

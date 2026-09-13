@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "@/routes";
 import { queryClient } from "@/lib/queryClient";
 import "./index.css";
+import "./styles/brew.css";
 
 async function bootstrap() {
   if (import.meta.env.VITE_USE_MOCKS === "true") {
