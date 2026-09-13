@@ -11,7 +11,7 @@ export function QRCodesPage() {
       <div className="qr-grid">
         {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => (
           <div className="qr-card" key={n}>
-            <FakeQR seed={n * 7 + 3} />
+            <FakeQR seed={n * 7 + 3} size={110} />
             <div style={{ fontFamily: "var(--display)", fontSize: 17, fontWeight: 600, marginTop: 8 }}>Table {String(n).padStart(2, "0")}</div>
             <div style={{ fontSize: 11, color: "var(--muted)" }} className="mono">brew.cafe/t/{n}</div>
             <div style={{ display: "flex", gap: 6, justifyContent: "center", marginTop: 10 }}>

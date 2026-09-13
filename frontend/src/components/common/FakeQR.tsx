@@ -1,7 +1,7 @@
 // Deterministic pseudo-QR grid for demo/mock screens (payment QR, table QR
 // cards). Not a real scannable code — swap for a real QR renderer when the
 // backend QR endpoint (step 5) is wired up.
-export function FakeQR({ seed }: { seed: number }) {
+export function FakeQR({ seed, size = 120 }: { seed: number; size?: number }) {
   const N = 11;
   const cells: { x: number; y: number; on: boolean }[] = [];
   let s = seed * 9301 + 49297;
@@ -17,7 +17,7 @@ export function FakeQR({ seed }: { seed: number }) {
     }
   }
   return (
-    <svg viewBox={`0 0 ${N} ${N}`} shapeRendering="crispEdges">
+    <svg viewBox={`0 0 ${N} ${N}`} width={size} height={size} shapeRendering="crispEdges">
       <rect width={N} height={N} fill="#fff" />
       {cells.filter((c) => c.on).map((c, i) => (
         <rect key={i} x={c.x} y={c.y} width="1" height="1" fill="#241C15" />

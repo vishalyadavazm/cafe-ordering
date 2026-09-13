@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import type { OrderStatus } from "@/lib/mockData";
 
-export function CountRing({ status }: { status: OrderStatus }) {
+export function CountRing({ active }: { active: boolean }) {
   const [mins, setMins] = useState(15);
   useEffect(() => {
-    if (status !== "preparing" && status !== "accepted") return;
+    if (!active) return;
     const t = setInterval(() => setMins((m) => (m > 1 ? m - 1 : m)), 60000);
     return () => clearInterval(t);
-  }, [status]);
+  }, [active]);
   const pct = Math.min(1, (20 - mins) / 20);
   const r = 64, C = 2 * Math.PI * r;
   return (

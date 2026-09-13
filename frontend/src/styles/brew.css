@@ -63,7 +63,7 @@
     radial-gradient(600px 340px at 80% -5%, #2a6c56 0%, transparent 60%),
     linear-gradient(165deg,#1E5C48 0%, #164536 62%, #123a2d 100%);
   color:#F3EEDF; position:relative; overflow:hidden; min-height:100vh; }
-.welcome::after{ content:""; position:absolute; inset:0;
+.welcome::after{ content:""; position:absolute; inset:0; pointer-events:none;
   background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
   background-size:22px 22px; opacity:.5; }
 .wm-top { display:flex; justify-content:space-between; align-items:center; z-index:2; }
@@ -81,7 +81,7 @@
   font-size:15px; padding:15px 20px; border-radius:16px; transition:.16s; }
 .btn-primary { background:var(--brand); color:#F5EFE0; box-shadow:0 10px 24px -8px rgba(30,92,72,.6); }
 .btn-primary:hover { background:var(--brand-2); transform:translateY(-1px); }
-.btn-primary:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+.btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
 .btn-light { background:#FBF6EA; color:var(--brand-2); box-shadow:0 12px 30px -10px rgba(0,0,0,.4); }
 .btn-light:hover { transform:translateY(-1px); }
 .btn-block { width:100%; }
@@ -187,7 +187,7 @@
 /* tracking */
 .track { padding:20px 18px 30px; }
 .track-hero { background:linear-gradient(160deg,#1E5C48,#164536); color:#F3EEDF; border-radius:22px; padding:24px; text-align:center; position:relative; overflow:hidden; }
-.track-hero::after{ content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px); background-size:18px 18px; }
+.track-hero::after{ content:""; position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px); background-size:18px 18px; }
 .count-ring { position:relative; width:150px; height:150px; margin:6px auto 4px; }
 .count-ring svg{ transform:rotate(-90deg); }
 .count-ring .cc { position:absolute; inset:0; display:grid; place-items:center; flex-direction:column; }
@@ -328,7 +328,6 @@
 /* QR grid */
 .qr-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:14px; }
 .qr-card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; text-align:center; }
-.qr-card svg{ width:110px; height:110px; }
 
 /* toasts */
 .toasts { position:fixed; z-index:200; right:20px; bottom:20px; display:flex; flex-direction:column; gap:10px; max-width:340px; }

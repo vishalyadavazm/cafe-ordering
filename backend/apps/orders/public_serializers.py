@@ -8,6 +8,7 @@ from rest_framework import serializers
 
 from apps.cafes.models import Cafe
 from apps.menu.models import AddOn, Category, MenuItem
+from apps.orders.models import Order, OrderItem
 from apps.tables.models import DiningTable
 
 
@@ -43,3 +44,25 @@ class PublicCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ("id", "name", "sort_order", "items")
+
+
+class PublicOrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = ("id", "name_snapshot", "unit_price", "quantity", "line_total", "addons")
+
+
+class PublicOrderSerializer(serializers.ModelSerializer):
+    """Tracking payload for /public/orders/<customer_session>/ — no cafe/tenant
+    internals, just what the customer's own phone needs to show progress."""
+    items = PublicOrderItemSerializer(many=True, read_only=True)
+    table_number = serializers.IntegerField(source="table.number", read_only=True, allow_null=True)
+    cafe_name = serializers.CharField(source="cafe.name", read_only=True)
+
+    class Meta:
+        model = Order
+        fields = (
+            "id", "order_number", "status", "table_number", "cafe_name", "items",
+            "subtotal", "tax", "total", "payment_status", "payment_method",
+            "special_instructions", "created_at", "accepted_at", "ready_at", "served_at",
+        )

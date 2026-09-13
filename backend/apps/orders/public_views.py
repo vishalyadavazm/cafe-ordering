@@ -6,9 +6,11 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from apps.menu.models import AddOn, Category, MenuItem
+from apps.orders.models import Order
 from apps.orders.public_serializers import (
     PublicCafeSerializer,
     PublicCategorySerializer,
+    PublicOrderSerializer,
     PublicTableSerializer,
 )
 from apps.orders.serializers import OrderCreateSerializer
@@ -73,3 +75,15 @@ def create_public_order(request, qr_token):
         },
         status=201,
     )
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def track_public_order(request, customer_session):
+    """A phone tracks its own order with the session token handed back at
+    creation — never by guessable order id (see CLAUDE.md convention 8)."""
+    order = get_object_or_404(
+        Order.objects.select_related("table", "cafe").prefetch_related("items"),
+        customer_session=customer_session,
+    )
+    return Response(PublicOrderSerializer(order).data)

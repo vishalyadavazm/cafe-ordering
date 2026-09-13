@@ -99,3 +99,23 @@ def test_create_order_rejects_addon_from_other_item(table, menu, cafe):
     payload = {"items": [{"menu_item_id": str(other_item.id), "quantity": 1, "addon_ids": [str(menu["addon"].id)]}]}
     resp = client.post(f"/api/v1/public/{table.qr_token}/orders/", payload, format="json")
     assert resp.status_code == 400
+
+
+def test_track_order_by_session(table, menu):
+    client = APIClient()
+    payload = {"items": [{"menu_item_id": str(menu["item"].id), "quantity": 1}]}
+    created = client.post(f"/api/v1/public/{table.qr_token}/orders/", payload, format="json").json()
+
+    resp = client.get(f"/api/v1/public/orders/{created['customer_session']}/")
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["id"] == created["id"]
+    assert body["status"] == "NEW"
+    assert body["table_number"] == table.number
+    assert body["items"][0]["name_snapshot"] == "Latte"
+
+
+def test_track_order_unknown_session_404(db):
+    client = APIClient()
+    resp = client.get("/api/v1/public/orders/not-a-real-session/")
+    assert resp.status_code == 404
